@@ -81,16 +81,16 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
 # Check for lock
 Check_lock
-sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" || { log_print ERROR "Kubernetes repo can't be added!"; exit $EXITCODE; }
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" -y || { log_print ERROR "Kubernetes repo can't be added!"; exit $EXITCODE; }
 
 # Check for lock
 Check_lock
 
 # Install Kubernetes
 log_print INFO "Installing Kubernetes"
-sudo apt-get install -y kubeadm=1.22.4-00  || { log_print ERROR "kubeadm installation failed!"; exit $EXITCODE; }
-sudo apt-get install -y kubelet=1.22.4-00  || { log_print ERROR "kubectl installation failed!"; exit $EXITCODE; }
-sudo apt-get install -y kubectl=1.22.4-00  || { log_print ERROR "kubelet installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubeadm=1.22.4-00 --allow-downgrades || { log_print ERROR "kubeadm installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubelet=1.22.4-00 --allow-downgrades || { log_print ERROR "kubectl installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubectl=1.22.4-00 --allow-downgrades || { log_print ERROR "kubelet installation failed!"; exit $EXITCODE; }
 
 
 # Hoding upgrades for Kubernetes software (versions to updated manually)
