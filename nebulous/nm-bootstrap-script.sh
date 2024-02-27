@@ -19,8 +19,10 @@ application_uuid=$APPLICATION_UUID
 logged_in_user=$(who | awk '{print $1}' | head -n 1)
 
 # Get the isMaster variable from the environment variable
-if [ "$NODE_TYPE" == "MASTER" ]; then IS_MASTER="true";
-else IS_MASTER="false"
+if [ "$NODE_TYPE" == "MASTER" ]; then
+  IS_MASTER="true";
+elif [ "$NODE_TYPE" == "WORKER" ]; then
+  IS_MASTER="false"
 fi
 
 # Check if string1 is equal to string2
@@ -51,4 +53,8 @@ EOF
 
 echo "$PAYLOAD"
 
-curl -v -X POST -H "Content-Type: application/json" -d "$PAYLOAD" http://${ONM_IP}:8082/api/v1/node/create
+if [ "$ACTION" == "CREATE" ]; then
+  curl -v -X POST -H "Content-Type: application/json" -d "$PAYLOAD" http://${ONM_IP}:8082/api/v1/node/create
+elif [ "$ACTION" == "DELETE" ]; then
+  curl -v -X DELETE -H "Content-Type: application/json" -d "$PAYLOAD" http://${ONM_IP}:8082/api/v1/node/delete
+fi
