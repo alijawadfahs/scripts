@@ -16,7 +16,7 @@ public_ip=$(curl -s http://httpbin.org/ip | grep -oP '(?<="origin": ")[^"]*')
 application_uuid=$APPLICATION_UUID
 
 # Get the currently logged in user (assuming single user login)
-logged_in_user=$(who | awk '{print $1}' | head -n 1)
+logged_in_user=$(whoami)
 
 # Get the isMaster variable from the environment variable
 if [ "$NODE_TYPE" == "MASTER" ]; then
