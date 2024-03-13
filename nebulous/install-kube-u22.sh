@@ -89,9 +89,9 @@ Check_lock
 
 # Install Kubernetes
 log_print INFO "Installing Kubernetes"
-sudo apt-get install -y kubeadm=1.22.4-00 --allow-downgrades || { log_print ERROR "kubeadm installation failed!"; exit $EXITCODE; }
-sudo apt-get install -y kubelet=1.22.4-00 --allow-downgrades || { log_print ERROR "kubectl installation failed!"; exit $EXITCODE; }
-sudo apt-get install -y kubectl=1.22.4-00 --allow-downgrades || { log_print ERROR "kubelet installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubeadm || { log_print ERROR "kubeadm installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubelet || { log_print ERROR "kubectl installation failed!"; exit $EXITCODE; }
+sudo apt-get install -y kubectl || { log_print ERROR "kubelet installation failed!"; exit $EXITCODE; }
 
 
 # Hoding upgrades for Kubernetes software (versions to updated manually)
