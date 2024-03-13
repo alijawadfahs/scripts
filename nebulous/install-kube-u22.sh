@@ -77,11 +77,12 @@ sudo docker -v || { log_print ERROR "Docker installation failed!"; exit $EXITCOD
 
 # Adding Kubernetes Repo
 log_print INFO "Adding Kubernetes Repo"
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # Check for lock
 Check_lock
-sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" -y || { log_print ERROR "Kubernetes repo can't be added!"; exit $EXITCODE; }
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg || { log_print ERROR "Kubernetes repo can't be added!"; exit $EXITCODE; }
+sudo apt-get update
 
 # Check for lock
 Check_lock
