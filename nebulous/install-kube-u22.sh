@@ -98,6 +98,14 @@ sudo apt-get install -y kubectl=1.28.7-1.1 --allow-downgrades || { log_print ERR
 sudo apt-mark hold kubeadm kubelet kubectl
 
 # Checking for the installiation versions
+
+sudo mkdir /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo systemctl restart containerd
+
+
 log_print INFO "Checking Kubernetes versions"
 
 kubeadm version     || { log_print ERROR "kubeadm installation failed!"; exit $EXITCODE; }
